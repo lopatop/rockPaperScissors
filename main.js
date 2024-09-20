@@ -1,66 +1,47 @@
-let userChoise;
-let computerChoise;
+
+let userChoice;
+let computerChoice;
 let isWinner = false;
-let count = 0; //счетчик ходов 
-let isWinnerUser = 0; //счетчик наших побед
-let isWinnerComputer = 0; //счетчик побед компьютера 
+let count = 3;
+let countUserWin = 0;
+let countComputerWin = 0;
 
+const keyWords = ['камень', 'ножницы', 'бумага'];
 
-while (count < 10) {
-    let isWinner = false;
-    count++;
-    console.log(count);
+while (count > 0) {
 
+    while (isWinner === false) {
+        userChoice = prompt(` Напиши: ${keyWords[0]}, ${keyWords[1]} или ${keyWords[2]} `);
+        userChoice = userChoice.toLowerCase();
+        if (userChoice === keyWords[0] || userChoice === keyWords[1] || userChoice === keyWords[2]) {
+            //начинаем игру
 
+            const randomNumber = Math.floor(Math.random() * 3);
+            computerChoice = (keyWords[randomNumber]);
+            alert(`Компьютер выбрал:  ${computerChoice}`);
 
-    while (!isWinner) {
+            if (userChoice === computerChoice) {
+                alert('Ничья, давай еще раз!');
+            } else if (
+                (userChoice === keyWords[0] && computerChoice === keyWords[2]) ||
+                (userChoice === keyWords[1] && computerChoice === keyWords[0]) ||
+                (userChoice === keyWords[2] && computerChoice === keyWords[1])
 
-        randomNumber = Math.floor(Math.random() * 3); //выбор компьтера 
-        switch (randomNumber) {
-            case 0:
-                computerChoise = 'камень';
-                break;
-            case 1:
-                computerChoise = 'ножницы';
-                break;
-            case 2:
-                computerChoise = 'бумага';
-                break;
-        }
-
-        userChoise = prompt("Введите: 'камень' 'ножницы' 'бумага' "); //выбор пользователя
-        userChoise = userChoise.toLocaleLowerCase();
-        console.log(userChoise, computerChoise);
-
-        if (userChoise === 'камень' || userChoise === 'ножницы' || userChoise === 'бумага') { //проверка и начала игры
-
-            if (userChoise === computerChoise) {
-                alert("Ничья");
-
-            } else {
-                const isUserWinner = (
-                    (userChoise === 'камень' && computerChoise === 'ножницы') ||
-                    (userChoise === 'ножницы' && computerChoise === 'бумага') ||
-                    (userChoise === 'бумага' && computerChoise === 'камень')
-                );
-
-                const message = isUserWinner ? 'Мы победили!' : 'Компьютер победил!';
-                alert(message);
-
-                if (isUserWinner) {
-                    isWinnerUser++;
-                } else {
-                    isWinnerComputer++;
-                };
-
+            ) {
+                alert('Компьютер выйграл!!!');
                 isWinner = true;
-                console.log(`"Колличество наших побед: ${isWinnerUser} ",  "Колличество побед компьютера: ${isWinnerComputer}`);
+                countUserWin++
+            } else {
+                alert('Мы победили!!!');
+                isWinner = true;
+                countUserWin++
             }
 
         } else {
-            alert("Введите правильное значение!");
+            alert("Введите правильное значение");
         }
-
     }
+    count--;
+    isWinner = false;
 }
-
+alert(`Игра закончилась со счетом ${countUserWin} : ${countComputerWin}`);
